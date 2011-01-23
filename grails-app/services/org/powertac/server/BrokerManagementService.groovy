@@ -13,4 +13,10 @@ class BrokerManagementService {
   public void broadcastMessage(Message message) {
     //TODO: implement jms logic that sends this particular message to all brokers
   }
+
+  public void broadcastMessages(List<Message> messageList) {
+    messageList.each {message ->
+      broadcastMessage(message)
+    }
+  }
 }
