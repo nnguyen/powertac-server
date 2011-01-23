@@ -25,6 +25,11 @@
 			http://www.springframework.org/schema/integration/xml
 			http://www.springframework.org/schema/integration/xml/spring-integration-xml-2.0.xsd">
 
+  <!--Explicitly reference other configuration files-->
+  <import resource="execution.xml"/>
+  <import resource="shout.xml"/>
+  <import resource="tariff.xml"/>
+
   <!--Auctioneer related messaging architecture-->
 
   <!--Demo gateway for testing purposes that can receive incoming messages-->
