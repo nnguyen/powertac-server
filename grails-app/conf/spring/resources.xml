@@ -35,6 +35,7 @@
   <alias name="distributionUtilityService" alias="distributionUtility"/>
   <alias name="taxAuthorityService" alias="taxAuthority"/>
   <alias name="customerService" alias="customer"/>
+  <alias name="tariffRuleEnforcerService" alias="tariffRuleEnforcer"/>
 
   <!--Auctioneer related messaging architecture-->
 
