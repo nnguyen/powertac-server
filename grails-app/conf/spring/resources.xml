@@ -30,6 +30,9 @@
   <import resource="shout.xml"/>
   <import resource="tariff.xml"/>
 
+  <!--Configure bean aliases for proper naming within the configuration files-->
+  <alias name="physicalEnvironmentService" alias="physicalEnvironment"/>
+
   <!--Auctioneer related messaging architecture-->
 
   <!--Demo gateway for testing purposes that can receive incoming messages-->
