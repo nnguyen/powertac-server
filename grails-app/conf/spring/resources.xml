@@ -34,6 +34,7 @@
   <alias name="physicalEnvironmentService" alias="physicalEnvironment"/>
   <alias name="distributionUtilityService" alias="distributionUtility"/>
   <alias name="taxAuthorityService" alias="taxAuthority"/>
+  <alias name="customerService" alias="customer"/>
 
   <!--Auctioneer related messaging architecture-->
 
