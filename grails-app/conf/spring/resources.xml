@@ -32,6 +32,7 @@
 
   <!--Configure bean aliases for proper naming within the configuration files-->
   <alias name="physicalEnvironmentService" alias="physicalEnvironment"/>
+  <alias name="distributionUtilityService" alias="distributionUtility"/>
 
   <!--Auctioneer related messaging architecture-->
 
