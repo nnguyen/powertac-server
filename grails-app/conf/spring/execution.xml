@@ -42,7 +42,7 @@
 
   <!--2.2. Allow customers to decide if they want to subscribe or negotiate-->
   <si:channel id="CuTariffReplyCommandsChannel"/>
-  <si:service-activator ref="customer" method="processTariffList"
+  <si:service-activator ref="customerService" method="processTariffList"
                      input-channel="AsTariffPublishedChannel" output-channel="CuTariffReplyCommandsChannel"/>
 
   <!--2.2.1. Validate every reply using the TariffRuleEnforcer-->
@@ -54,7 +54,7 @@
   <si:channel id="CuTariffReplyCommandAcceptedChannel"/>
   <si:channel id="CuTariffReplyCommandRejectedChannel"/>
   <si:filter input-channel="CuTariffReplyChannel" output-channel="CuTariffReplyCommandAcceptedChannel"
-          discard-channel="CuTariffReplyCommandRejectedChannel" ref="tariffRuleEnforcer"/>
+          discard-channel="CuTariffReplyCommandRejectedChannel" ref="tariffRuleEnforcerService"/>
 
   <!--2.2.2.1. Process validated TariffReply objects and send them to their respective broker-->
   <si:channel id="CuBrTariffReplyChannel"/>
@@ -74,7 +74,7 @@
 
   <!--3.1. Get real weather data from the physical environment-->
   <si:publish-subscribe-channel id="PeWeatherRealDataChannel"/>
-  <si:service-activator ref="physicalEnvironment" method="generateRealWeatherData"
+  <si:service-activator ref="physicalEnvironmentService" method="generateRealWeatherData"
                      input-channel="CcFilteredTimeslotChangedChannel"
                      output-channel="PeWeatherRealDataChannel"/>
 
@@ -83,7 +83,7 @@
 
   <!--3.3. Second, get meter reading from all customers for the given weather data (which includes the reference to the timeslot-->
   <si:channel id="CcCuMeterReadingChannel"/>
-  <si:service-activator ref="customer" method="generateMeterReading"
+  <si:service-activator ref="customerService" method="generateMeterReading"
                      input-channel="PeWeatherRealDataChannel"
                      output-channel="CcCuMeterReadingChannel"/>
 
@@ -106,7 +106,7 @@
 
   <!--3.5.2 Have the Distribution Utility process the meter balances. A list of cash/depot updates will be returned-->
   <si:channel id="DuAsCashAndDepotUpdateCommandsChannel"/>
-  <si:service-activator ref="distributionUtility" method="processMeterReadingBalances"
+  <si:service-activator ref="distributionUtilityService" method="processMeterReadingBalances"
                      input-channel="AsMeterReadingBalanceCommandsChannel"
                      output-channel="DuAsCashAndDepotUpdateCommandsChannel"/>
 
@@ -137,7 +137,7 @@
 
   <!--4. Publish weather forecasts for every enabled timeslot-->
   <si:publish-subscribe-channel id="PeWeatherForecastDataChannel"/>
-  <si:service-activator ref="physicalEnvironment" method="generateForecastWeatherData"
+  <si:service-activator ref="physicalEnvironmentService" method="generateForecastWeatherData"
                      input-channel="CcTimeslotChangedChannel"
                      output-channel="PeWeatherForecastDataChannel"/>
 
@@ -145,7 +145,7 @@
   <si:service-activator ref="brokerManagementService" method="broadcastMessages" input-channel="PeWeatherForecastDataChannel"/>
 
   <!--4.2. Send the forecast list to all customers-->
-  <si:service-activator ref="customer" method="processWeatherForecasts" input-channel="PeWeatherForecastDataChannel"/>
+  <si:service-activator ref="customerService" method="processWeatherForecasts" input-channel="PeWeatherForecastDataChannel"/>
 
 
 </beans>

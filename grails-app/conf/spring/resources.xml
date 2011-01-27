@@ -26,16 +26,9 @@
 			http://www.springframework.org/schema/integration/xml/spring-integration-xml-2.0.xsd">
 
   <!--Explicitly reference other configuration files-->
-  <import resource="execution.xml"/>
+  <!--<import resource="execution.xml"/>-->
   <import resource="shout.xml"/>
   <import resource="tariff.xml"/>
-
-  <!--Configure bean aliases for proper naming within the configuration files-->
-  <alias name="physicalEnvironmentService" alias="physicalEnvironment"/>
-  <alias name="distributionUtilityService" alias="distributionUtility"/>
-  <alias name="taxAuthorityService" alias="taxAuthority"/>
-  <alias name="customerService" alias="customer"/>
-  <alias name="tariffRuleEnforcerService" alias="tariffRuleEnforcer"/>
 
   <!--Auctioneer related messaging architecture-->
 
@@ -65,8 +58,8 @@
   </bean>
 
   <!--Map XML to domain class-->
-  <si-xml:unmarshalling-transformer unmarshaller="xmlUnMarshaller" input-channel="BrIncomingXml"
-                                    output-channel="BrIncoming"/>
+  <si:transformer ref="domainClassTransformer" input-channel="BrIncomingXml" output-channel="BrIncoming"
+                  method="fromXml"/>
 
   <si:publish-subscribe-channel id="BrIncoming"/>
 
@@ -75,6 +68,9 @@
     <si:mapping type="org.powertac.common.command.ShoutDoCreateCmd" channel="BrIncomingShoutDoCreate"/>
     <si:mapping type="org.powertac.common.command.ShoutDoDeleteCmd" channel="BrIncomingShoutDoDelete"/>
     <si:mapping type="org.powertac.common.command.ShoutDoUpdateCmd" channel="BrIncomingShoutDoUpdate"/>
+    <si:mapping type="org.powertac.common.command.TariffDoPublishCmd" channel="BrIncomingShoutDoUpdate"/>
+    <si:mapping type="org.powertac.common.command.TariffDoReplyCmd" channel="BrIncomingShoutDoUpdate"/>
+    <si:mapping type="org.powertac.common.command.TariffDoRevokeCmd" channel="BrIncomingShoutDoUpdate"/>
   </si:payload-type-router>
 
   <!-- ===== -->
@@ -101,6 +97,7 @@
     <si:mapping type="org.powertac.common.Orderbook" channel="BrOutgoingAll"/>
     <si:mapping type="org.powertac.common.TransactionLog" channel="BrOutgoingAll"/>
     <si:mapping type="org.powertac.common.Shout" channel="BrOutgoingSingle"/>
+    <si:mapping type="org.powertac.common.Tariff" channel="BrOutgoingSingle"/>
   </si:payload-type-router>
 
   <!--Process CashDoUpdateCmd objects. This additional processing in contrast to Orderbook/TransactionLog/Shout objects-->
